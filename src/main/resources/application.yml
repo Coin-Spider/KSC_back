@@ -12,3 +12,6 @@ logging:
       rum:
         ksc_back:
           com.rum.ksc_back.KscBackApplication: debug
+mybatis:
+  mapper-locations: classpath:Dao/*Mapper.xml
+  type-aliases-package: com.rum.ksc_back.domain.Ron
