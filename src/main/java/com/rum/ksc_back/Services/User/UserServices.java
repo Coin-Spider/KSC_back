@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserServices {
     KSCUser getUserByUserName(String userName);
-
     KSCUserRep Login(KSCUser kscUser);
-
     KSCUserRep Register(KSCUser kscUser);
+    KSCUserRep cheTokenTime(int user_Id);
 }

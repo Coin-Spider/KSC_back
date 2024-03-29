@@ -19,7 +19,7 @@ import java.util.Objects;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json;charset=UTF-8");
         if (Objects.isNull(request.getHeader("Token")) || request.getHeader("Token").isBlank()) {
             //Token 异常

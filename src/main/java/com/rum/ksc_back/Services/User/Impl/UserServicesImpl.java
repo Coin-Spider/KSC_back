@@ -1,5 +1,8 @@
 package com.rum.ksc_back.Services.User.Impl;
 
+import cn.hutool.crypto.BCUtil;
+import com.rum.ksc_back.Dao.PicMapper;
+import com.rum.ksc_back.Dao.RoleMapper;
 import com.rum.ksc_back.Dao.UserMapper;
 import com.rum.ksc_back.KSCException.ApiError;
 import com.rum.ksc_back.KSCException.ApiException;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -22,6 +26,8 @@ import java.util.Objects;
 @Service
 public class UserServicesImpl implements UserServices {
     @Autowired private UserMapper userMapper;
+    @Autowired private RoleMapper roleMapper;
+    @Autowired private PicMapper picMapper;
     @Resource private AuthenticationManager authenticationManager;
     @Override
     public KSCUser getUserByUserName(String userName) {
@@ -31,16 +37,20 @@ public class UserServicesImpl implements UserServices {
     @Override
     public KSCUserRep Login(KSCUser kscUser) {
         KSCUser user2;
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken(kscUser.getUserName(),kscUser.getPassWord());
         Authentication authentication= authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if(Objects.isNull(authentication)){
             throw new ApiException(ApiError.PasswordNotCreat);
         }
+
         SecurityUser securityUser= (SecurityUser) authentication.getPrincipal();
         user2=securityUser.getUser();
         String token = JwtUtil.getJwt(user2);
-        System.out.println(token);
-        return new KSCUserRep(user2,token);
+        if (user2.getUserState()==0){
+            throw new ApiException(ApiError.UserNotAllowed);
+        }
+        return new KSCUserRep(user2,token,roleMapper.SelectById(user2.getRoleId()), picMapper.getPicUrl(user2.getPicId()));
     }
 
     @Override
@@ -53,5 +63,11 @@ public class UserServicesImpl implements UserServices {
         userMapper.InsertUser(kscUser);
         //返回登录对象
         return Login(userMapper.getByUserName(kscUser.getUserName()));
+    }
+
+    @Override
+    public KSCUserRep cheTokenTime(int user_Id) {
+        KSCUser byUserId = userMapper.getByUserId(user_Id);
+        return Login(byUserId);
     }
 }

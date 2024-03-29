@@ -12,7 +12,6 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class ExceptionHandle {
     @ExceptionHandler(ApiException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public final Request handleAllExceptions(ApiException ex) {
         return new Request(ex.errorCode,ex.errorMessage);
     }

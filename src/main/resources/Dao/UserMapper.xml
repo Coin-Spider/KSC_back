@@ -8,5 +8,8 @@
     <select id="getByUserName" resultType="com.rum.ksc_back.domain.Ron.KSCUser">
         select * from user where userName=#{userName}
     </select>
+    <select id="getByUserId" resultType="com.rum.ksc_back.domain.Ron.KSCUser">
+        select * from user where userId=#{userId}
+    </select>
 
 </mapper>

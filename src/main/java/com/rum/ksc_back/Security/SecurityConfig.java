@@ -77,8 +77,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizehttprequests ->
                 authorizehttprequests
                         .requestMatchers("/User/Login").permitAll()
-                        .requestMatchers("/User/test").hasAuthority("普通用户")
-                        .anyRequest().permitAll()
+                        .anyRequest().hasAnyAuthority("普通用户","上传者","管理员")
         );
         http.authenticationProvider(kscAuthenticationProvider);
         http.exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(accessDeniedHandler)

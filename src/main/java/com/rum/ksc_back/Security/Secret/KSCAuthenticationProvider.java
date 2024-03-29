@@ -58,7 +58,7 @@ public class KSCAuthenticationProvider implements AuthenticationProvider, UserDe
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         //添加 Authorities
-        authorities.add(new SimpleGrantedAuthority(roleMapper.SelectById(user.getRoleId()).getRoleName()));
+        authorities.add(new SimpleGrantedAuthority(roleMapper.SelectById(user.getRoleId())));
         return new SecurityUser(user, authorities);
     }
 }

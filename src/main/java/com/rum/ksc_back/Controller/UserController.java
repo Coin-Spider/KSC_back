@@ -47,4 +47,12 @@ public class UserController {
         return new Request("1",userServices.Register(kscUser));
     }
 
+    @GetMapping("/chToken")
+    public Request chTokenTime(int userId){
+        if (Objects.isNull(userId)){
+            throw new ApiException(ApiError.Fail);
+        }
+        return new Request("1",userServices.cheTokenTime(userId));
+    }
+
 }

@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoleMapper {
     //通过RoleId查询身份
-    Role SelectById(int roleId);
+    String SelectById(int roleId);
 }

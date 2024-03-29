@@ -52,7 +52,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (userName.isBlank()) {
             throw new ApiException("0004", "Token无效");
         }
-//        System.out.println(userName);
         SecurityUser s= (SecurityUser) kscAuthenticationProvider.loadUserByUsername(userName);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(s, s.getPassword(), s.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);

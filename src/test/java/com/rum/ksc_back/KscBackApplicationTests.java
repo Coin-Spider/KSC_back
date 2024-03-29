@@ -1,15 +1,11 @@
 package com.rum.ksc_back;
 
-import com.rum.ksc_back.Dao.UserMapper;
-import com.rum.ksc_back.Utils.JwtUtil;
-import com.rum.ksc_back.Utils.SecretUtil;
-import com.rum.ksc_back.domain.Ron.KSCUser;
+import cn.hutool.crypto.digest.BCrypt;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.IfProfileValue;
 
-import java.sql.Timestamp;
-import java.time.ZonedDateTime;
+import java.util.*;
 
 @SpringBootTest
 class KscBackApplicationTests {
@@ -23,6 +19,34 @@ class KscBackApplicationTests {
 //        System.out.println(now);
 //        KSCUser user=new KSCUser(0,"1","wwww",null,null,1,1,"sada", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()));
 //        System.out.println(JwtUtil.chTimeEx(JwtUtil.getJwt(user)));
+        String[] words = {"cd", "ef", "a"};
+        System.out.println(maxPalindromesAfterOperations(words));
     }
 
+    public static int maxPalindromesAfterOperations(String[] words) {
+        int[] count = new int[26];
+        int sum = 0;
+        int pair = 0;
+        int[] len = new int[words.length];
+        for (int i = 0; i < words.length; i++) {
+            len[i] = words[i].length();
+            sum += words[i].length();
+            for (int j = 0; j < words[i].length(); j++) {
+                count[words[i].charAt(j) - 'a']++;
+            }
+        }
+        for (int j : count) {
+            if (j == 0) continue;
+            pair += j / 2;
+        }
+        Arrays.sort(len);
+        for (int i = 0; i < len.length; i++) {
+            sum -= len[i];
+            pair -= len[i] / 2;
+            if (pair < 0 || sum < 0) {
+                return i;
+            }
+        }
+        return words.length;
+    }
 }

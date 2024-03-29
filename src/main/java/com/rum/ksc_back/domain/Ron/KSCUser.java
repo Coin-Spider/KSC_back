@@ -13,18 +13,7 @@ public class KSCUser {
     private int roleId;
     private String salt;
     private Timestamp onDate;
-
-    public KSCUser(int userId, String nickName, String userName, String passWord, String email, int userState, int roleId, String salt, Timestamp onDate) {
-        this.userId = userId;
-        this.nickName = nickName;
-        this.userName = userName;
-        this.passWord = passWord;
-        this.email = email;
-        this.userState = userState;
-        this.roleId = roleId;
-        this.salt = salt;
-        this.onDate = onDate;
-    }
+    private int picId;
 
     public int getUserId() {
         return userId;
@@ -74,8 +63,6 @@ public class KSCUser {
         this.userState = userState;
     }
 
-
-
     public int getRoleId() {
         return roleId;
     }
@@ -99,16 +86,25 @@ public class KSCUser {
     public void setOnDate(Timestamp onDate) {
         this.onDate = onDate;
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        KSCUser user = (KSCUser) o;
-        return userId == user.userId && userState == user.userState && roleId == user.roleId && salt == user.salt && Objects.equals(nickName, user.nickName) && Objects.equals(userName, user.userName) && Objects.equals(passWord, user.passWord) && Objects.equals(email, user.email) && Objects.equals(onDate, user.onDate);
+
+    public int getPicId() {
+        return picId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, nickName, userName, passWord, email, userState, roleId, salt, onDate);
+    public void setPicId(int picId) {
+        this.picId = picId;
+    }
+
+    public KSCUser(int userId, String nickName, String userName, String passWord, String email, int userState, int roleId, String salt, Timestamp onDate, int picId) {
+        this.userId = userId;
+        this.nickName = nickName;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.email = email;
+        this.userState = userState;
+        this.roleId = roleId;
+        this.salt = salt;
+        this.onDate = onDate;
+        this.picId = picId;
     }
 }
