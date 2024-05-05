@@ -95,6 +95,9 @@ public class KSCUser {
         this.picId = picId;
     }
 
+    public KSCUser() {
+    }
+
     public KSCUser(int userId, String nickName, String userName, String passWord, String email, int userState, int roleId, String salt, Timestamp onDate, int picId) {
         this.userId = userId;
         this.nickName = nickName;

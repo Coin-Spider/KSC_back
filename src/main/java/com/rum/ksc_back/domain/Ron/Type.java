@@ -34,4 +34,7 @@ public class Type {
         this.typeContent = typeContent;
         this.typeFather = typeFather;
     }
+
+    public Type() {
+    }
 }

@@ -12,7 +12,11 @@ public enum ApiError {
     //账号活密码错误
     PasswordNotCreat("0005","账号或密码错误"),
     //缺少注册信息
-    NeedMoreInfo("0006","注册信息缺失");
+    NeedMoreInfo("0006","注册信息缺失"),
+    //资源不存在或已被删除
+    ResourcesNotAllowed("0007","资源不存在或已被删除"),
+    //用户已存在
+    UserAreadyFind("0008","用户已存在");
     private final String errorCode;
     private final String errorMessage;
     ApiError(String errorCode, String errorMessage) {

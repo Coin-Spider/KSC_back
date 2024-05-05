@@ -5,11 +5,27 @@
         insert into user( nickName, userName, passWord, email,  salt) VALUES (#{nickName},#{userName},#{passWord},#{email},#{salt})
     </insert>
 
+    <insert id="follow">
+        insert into userfollowers(userId, followerId) VALUES (#{beFollowedId},#{userId});
+    </insert>
+    <delete id="delFollow">
+        delete from userfollowers where userId=#{beFollowedId} and followerId=#{userId};
+    </delete>
+
     <select id="getByUserName" resultType="com.rum.ksc_back.domain.Ron.KSCUser">
         select * from user where userName=#{userName}
     </select>
     <select id="getByUserId" resultType="com.rum.ksc_back.domain.Ron.KSCUser">
         select * from user where userId=#{userId}
+    </select>
+    <select id="getFollowers" resultType="java.lang.Integer">
+        select count(*) from userFollowers where userId=#{userId}
+    </select>
+    <select id="isFollowered" resultType="java.lang.Integer">
+        select count(*) from userfollowers where userId=#{beFollowed} and followerId=#{userId}
+     </select>
+    <select id="getNickNameById" resultType="java.lang.String">
+        select nickName from user where userId=#{userId}
     </select>
 
 </mapper>

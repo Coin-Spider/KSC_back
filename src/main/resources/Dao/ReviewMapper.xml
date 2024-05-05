@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rum.ksc_back.Dao.ReviewMapper">
+    <insert id="insertReview" useGeneratedKeys="true" keyProperty="reviewId">
+        insert into review(reviewContent, reviewUser, essayId) VALUES (#{reviewContent},#{reviewUser},#{essayId});
+    </insert>
+    <select id="selectById" resultType="com.rum.ksc_back.domain.Ron.Review">
+        select * from review where essayId=#{essayId} order by onTime;
+    </select>
+    <select id="selectByReviewId" resultType="com.rum.ksc_back.domain.Ron.Review">
+        select * from review where reviewId=#{reviewId}
+    </select>
+</mapper>

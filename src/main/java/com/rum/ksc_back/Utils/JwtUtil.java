@@ -4,10 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.rum.ksc_back.domain.Ron.KSCUser;
 
-import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class JwtUtil {
     private final String issuer="w";
@@ -16,7 +17,7 @@ public class JwtUtil {
     }
 
     public static String getJwt(KSCUser user) {
-        Date Expiration = Date.valueOf(getNow().plusDays(1).toLocalDate());
+        Date Expiration =  Date.from(JwtUtil.getNow().plusHours(30).toInstant());
         return
                 JWT.create()
                         .withClaim("userName", user.getUserName())
@@ -26,9 +27,9 @@ public class JwtUtil {
     }
 
     public static boolean chTimeEx(String token) {
-        LocalDate localDate = getNow().toLocalDate();
-        LocalDate n = LocalDate.ofInstant(JWT.decode(token).getExpiresAt().toInstant(), ZoneId.systemDefault());
-        return localDate.isBefore(n);
+        Instant now = getNow().toInstant();
+        Instant expires = JWT.decode(token).getExpiresAt().toInstant();
+        return now.isBefore(expires);
     }
 
     public static boolean chSigner(String token) {

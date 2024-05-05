@@ -14,14 +14,15 @@ public class KSCUserRep {
     private String token;
     private String picUrl;
     private Timestamp onDate;
-    public KSCUserRep(KSCUser kscUser,String token,String role,String picUrl) {
-        this.userId=kscUser.getUserId();
-        this.nickName= kscUser.getNickName();
-        this.email=kscUser.getEmail();
-        this.role=role;
-        this.token=token;
-        this.picUrl=picUrl;
-        this.onDate=kscUser.getOnDate();
+
+    public KSCUserRep(KSCUser kscUser, String token, String role, String picUrl) {
+        this.userId = kscUser.getUserId();
+        this.nickName = kscUser.getNickName();
+        this.email = kscUser.getEmail();
+        this.role = role;
+        this.token = token;
+        this.picUrl = picUrl;
+        this.onDate = kscUser.getOnDate();
     }
 
     public int getUserId() {

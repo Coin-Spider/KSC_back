@@ -3,7 +3,7 @@ package com.rum.ksc_back.Controller;
 import com.rum.ksc_back.Config.Request;
 import com.rum.ksc_back.KSCException.ApiError;
 import com.rum.ksc_back.KSCException.ApiException;
-import com.rum.ksc_back.Services.User.UserServices;
+import com.rum.ksc_back.Services.UserServices;
 import com.rum.ksc_back.domain.Ron.KSCUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -54,5 +54,27 @@ public class UserController {
         }
         return new Request("1",userServices.cheTokenTime(userId));
     }
+    @GetMapping("/follow")
+    public Request follow(int userId,int beFollowedId){
+        if (userId==beFollowedId){
+            return new Request("500","未知错误");
+        }
+        if (userServices.follow(userId,beFollowedId)){
+            return new Request("1","操作成功");
+        }
+        return new Request("500","未知错误");
+    }
+    //取消关注
+    @GetMapping("/delFollow")
+    public Request delFollow(int userId, int beFollowedId){
+        if (userId==beFollowedId){
+            return new Request("500","未知错误");
+        }
+        if (userServices.delFollow(userId,beFollowedId)){
+            return new Request("1","操作成功");
+        }
+        return new Request("500","未知错误");
+    }
+    //
 
 }

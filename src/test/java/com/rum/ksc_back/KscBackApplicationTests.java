@@ -1,17 +1,33 @@
 package com.rum.ksc_back;
 
-import cn.hutool.crypto.digest.BCrypt;
+import cn.hutool.core.collection.ListUtil;
+import com.auth0.jwt.JWT;
+import com.jayway.jsonpath.internal.function.numeric.Sum;
+import com.rum.ksc_back.Controller.ReviewController;
+import com.rum.ksc_back.Dao.ReviewMapper;
+import com.rum.ksc_back.Utils.JwtUtil;
+import com.rum.ksc_back.domain.Ron.Review;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.IfProfileValue;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
+
+import static java.time.temporal.ChronoField.OFFSET_SECONDS;
 
 @SpringBootTest
 class KscBackApplicationTests {
+    @Autowired
+    private ReviewMapper reviewMapper;
+    @Autowired
+    private ReviewController reviewController;
 
     @Test
     void contextLoads() {
+        Review review = new Review(0, 0, "测试", 15, 6, null, 0);
+        System.out.println(reviewController.ReplyEssay("测试", 6, 15).getBody());
     }
 
     public static void main(String[] args) {
@@ -19,34 +35,11 @@ class KscBackApplicationTests {
 //        System.out.println(now);
 //        KSCUser user=new KSCUser(0,"1","wwww",null,null,1,1,"sada", Timestamp.valueOf(ZonedDateTime.now().toLocalDateTime()));
 //        System.out.println(JwtUtil.chTimeEx(JwtUtil.getJwt(user)));
-        String[] words = {"cd", "ef", "a"};
-        System.out.println(maxPalindromesAfterOperations(words));
+//        System.out.println(JwtUtil.getNow().getLong(OFFSET_SECONDS));
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        System.out.println(timestamp.getTime() % 26300000);
     }
 
-    public static int maxPalindromesAfterOperations(String[] words) {
-        int[] count = new int[26];
-        int sum = 0;
-        int pair = 0;
-        int[] len = new int[words.length];
-        for (int i = 0; i < words.length; i++) {
-            len[i] = words[i].length();
-            sum += words[i].length();
-            for (int j = 0; j < words[i].length(); j++) {
-                count[words[i].charAt(j) - 'a']++;
-            }
-        }
-        for (int j : count) {
-            if (j == 0) continue;
-            pair += j / 2;
-        }
-        Arrays.sort(len);
-        for (int i = 0; i < len.length; i++) {
-            sum -= len[i];
-            pair -= len[i] / 2;
-            if (pair < 0 || sum < 0) {
-                return i;
-            }
-        }
-        return words.length;
-    }
+
 }
+

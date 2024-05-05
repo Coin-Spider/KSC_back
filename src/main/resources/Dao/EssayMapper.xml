@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rum.ksc_back.Dao.EssayMapper">
+    <insert id="like">
+        insert into essaylike(essayId, userId) VALUES (#{essayId},#{userId})
+    </insert>
+    <insert id="collection">
+        insert into essaycollection(essayId, userId) VALUES (#{essayId},#{userId})
+    </insert>
+    <delete id="unLike">
+        delete from essaylike where essayId=#{essayId} and userId=#{userId}
+    </delete>
+    <delete id="unCollection">
+        delete from essaycollection where essayId=#{essayId} and userId=#{userId}
+    </delete>
 
     <select id="selectRedom" resultType="com.rum.ksc_back.domain.Ron.Essay">
-
+        select * from essay where essayState=1 limit 100;
+    </select>
+    <select id="selectById" resultType="com.rum.ksc_back.domain.Ron.Essay">
+        select * from essay where essayId = #{essayId};
+    </select>
+    <select id="selectLike" resultType="java.lang.Integer">
+        select count(*) from essaylike where essayId=#{essayId}
+    </select>
+    <select id="isLiked" resultType="java.lang.Integer">
+        select count(*) from essaylike where essayId=#{essayId} and userId=#{userId}
+    </select>
+    <select id="selectColltions" resultType="java.lang.Integer">
+        select count(*) from essaycollection where essayId=#{essayId}
+    </select>
+    <select id="isCollectioned" resultType="java.lang.Integer">
+        select count(*) from essaycollection where essayId=#{essayId} and userId=#{userId}
+    </select>
+    <select id="findAuth" resultType="java.lang.Integer">
+        select userId from essay where essayId=#{essayId};
     </select>
 </mapper>
